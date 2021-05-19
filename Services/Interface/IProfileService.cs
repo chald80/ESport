@@ -13,6 +13,7 @@ namespace ESport.Services.Interface
         void DeleteProfile(Profile profile);
         Profile GetProfile(int id);
         public void EditProfile(Profile profile);
+        Profile GetScore(int id);
 
     }
 }
