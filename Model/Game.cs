@@ -14,8 +14,8 @@ namespace ESport.Model
         public Game()
         {
             this.Profiles = new HashSet<Profile>();
-            this.Maps = new HashSet<Map>();
         }
+
         [Key]
         [Required]
         public int GameId { get; set; }

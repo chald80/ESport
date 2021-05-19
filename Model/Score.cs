@@ -10,16 +10,12 @@ namespace ESport.Model
     [Table("Score")]
     public class Score
     {
-        public Score()
-        {
-            this.Maps = new HashSet<Map>();
-        }
         [Key]
         [Required]
         public int ScoreId { get; set; }
         [Required]
         public int Stat { get; set; }
-        public virtual  ICollection<Map> Maps { get; set; }
         
+
     }
 }

@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ESport.Migrations
 {
     [DbContext(typeof(ESportContext))]
-    [Migration("20210518184407_1")]
+    [Migration("20210519155952_1")]
     partial class _1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -29,14 +29,10 @@ namespace ESport.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("GameName")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("ProfileId")
-                        .HasColumnType("int");
-
                     b.HasKey("GameId");
-
-                    b.HasIndex("ProfileId");
 
                     b.ToTable("Games");
                 });
@@ -73,6 +69,7 @@ namespace ESport.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("MapsName")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("MapsId");
@@ -88,6 +85,10 @@ namespace ESport.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("ProfileName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("ProfileId");
 
@@ -114,13 +115,19 @@ namespace ESport.Migrations
                     b.ToTable("Score");
                 });
 
-            modelBuilder.Entity("ESport.Model.Game", b =>
+            modelBuilder.Entity("GameProfile", b =>
                 {
-                    b.HasOne("ESport.Model.Profile", "Profile")
-                        .WithMany("Games")
-                        .HasForeignKey("ProfileId");
+                    b.Property<int>("GamesGameId")
+                        .HasColumnType("int");
 
-                    b.Navigation("Profile");
+                    b.Property<int>("ProfilesProfileId")
+                        .HasColumnType("int");
+
+                    b.HasKey("GamesGameId", "ProfilesProfileId");
+
+                    b.HasIndex("ProfilesProfileId");
+
+                    b.ToTable("GameProfile");
                 });
 
             modelBuilder.Entity("ESport.Model.Info", b =>
@@ -134,20 +141,31 @@ namespace ESport.Migrations
 
             modelBuilder.Entity("ESport.Model.Map", b =>
                 {
-                    b.HasOne("ESport.Model.Game", "Game")
+                    b.HasOne("ESport.Model.Game", null)
                         .WithMany("Maps")
                         .HasForeignKey("GameId");
-
-                    b.Navigation("Game");
                 });
 
             modelBuilder.Entity("ESport.Model.Score", b =>
                 {
-                    b.HasOne("ESport.Model.Map", "Map")
+                    b.HasOne("ESport.Model.Map", null)
                         .WithMany("Scores")
                         .HasForeignKey("MapsId");
+                });
 
-                    b.Navigation("Map");
+            modelBuilder.Entity("GameProfile", b =>
+                {
+                    b.HasOne("ESport.Model.Game", null)
+                        .WithMany()
+                        .HasForeignKey("GamesGameId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ESport.Model.Profile", null)
+                        .WithMany()
+                        .HasForeignKey("ProfilesProfileId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("ESport.Model.Game", b =>
@@ -162,8 +180,6 @@ namespace ESport.Migrations
 
             modelBuilder.Entity("ESport.Model.Profile", b =>
                 {
-                    b.Navigation("Games");
-
                     b.Navigation("Info");
                 });
 #pragma warning restore 612, 618
