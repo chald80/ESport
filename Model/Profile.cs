@@ -8,10 +8,7 @@ namespace ESport.Model
 
     public class Profile
     {
-        public Profile()
-        {
-            this.Games = new HashSet<Game>();
-        }
+
         [Key]
         [Required]
         public int ProfileId { get; set; }

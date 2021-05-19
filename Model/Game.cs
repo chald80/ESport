@@ -11,17 +11,15 @@ namespace ESport.Model
 
     public class Game
     {
-        public Game()
-        {
-            this.Profiles = new HashSet<Profile>();
-        }
+
 
         [Key]
         [Required]
         public int GameId { get; set; }
         [Required]
         public string GameName { get; set; }
-        public virtual ICollection<Profile> Profiles { get; set; }
+        public int ProfileId { get; set; }
+
         public virtual ICollection<Map> Maps { get; set; }
 
     }
