@@ -10,8 +10,8 @@ namespace ESport.Model
     {
         protected override void OnConfiguring(DbContextOptionsBuilder options)
         {
-            //options.UseSqlServer(@"Data Source=178.155.224.44; Initial Catalog=ESport; User ID = sa; Password = 2021Sommer");
-            options.UseSqlServer(@"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=ESport;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False");
+            options.UseSqlServer(@"Data Source=178.155.224.44; Initial Catalog=ESport; User ID = sa; Password = 2021Sommer");
+            //options.UseSqlServer(@"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=ESport;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False");
 
         }
         public virtual DbSet<Profile> Profiles { get; set; }

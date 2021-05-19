@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ESport.Migrations
 {
     [DbContext(typeof(ESportContext))]
-    [Migration("20210519155952_1")]
+    [Migration("20210519180027_1")]
     partial class _1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -32,7 +32,12 @@ namespace ESport.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("ProfileId")
+                        .HasColumnType("int");
+
                     b.HasKey("GameId");
+
+                    b.HasIndex("ProfileId");
 
                     b.ToTable("Games");
                 });
@@ -115,19 +120,13 @@ namespace ESport.Migrations
                     b.ToTable("Score");
                 });
 
-            modelBuilder.Entity("GameProfile", b =>
+            modelBuilder.Entity("ESport.Model.Game", b =>
                 {
-                    b.Property<int>("GamesGameId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ProfilesProfileId")
-                        .HasColumnType("int");
-
-                    b.HasKey("GamesGameId", "ProfilesProfileId");
-
-                    b.HasIndex("ProfilesProfileId");
-
-                    b.ToTable("GameProfile");
+                    b.HasOne("ESport.Model.Profile", null)
+                        .WithMany("Games")
+                        .HasForeignKey("ProfileId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("ESport.Model.Info", b =>
@@ -153,21 +152,6 @@ namespace ESport.Migrations
                         .HasForeignKey("MapsId");
                 });
 
-            modelBuilder.Entity("GameProfile", b =>
-                {
-                    b.HasOne("ESport.Model.Game", null)
-                        .WithMany()
-                        .HasForeignKey("GamesGameId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("ESport.Model.Profile", null)
-                        .WithMany()
-                        .HasForeignKey("ProfilesProfileId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("ESport.Model.Game", b =>
                 {
                     b.Navigation("Maps");
@@ -180,6 +164,8 @@ namespace ESport.Migrations
 
             modelBuilder.Entity("ESport.Model.Profile", b =>
                 {
+                    b.Navigation("Games");
+
                     b.Navigation("Info");
                 });
 #pragma warning restore 612, 618
