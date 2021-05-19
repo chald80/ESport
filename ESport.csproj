@@ -16,10 +16,4 @@
     </PackageReference>
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Pages\Maps\" />
-    <Folder Include="Pages\Infos\" />
-    <Folder Include="Pages\Scores\" />
-  </ItemGroup>
-
 </Project>

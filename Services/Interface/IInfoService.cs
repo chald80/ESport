@@ -12,5 +12,7 @@ namespace ESport.Services.Interface
         void AddInfo(Info info);
         void DeleteInfo(Info info);
         Info GetInfo(int id);
+        public void EditInfo(Info info);
+
     }
 }

@@ -25,7 +25,7 @@ namespace ESport.Services.EFServices
             context.SaveChanges();
         }
 
-        public void DeleteGame(Map map)
+        public void DeleteMap(Map map)
         {
             context.Maps.Remove(map);
             context.SaveChanges();
@@ -33,12 +33,14 @@ namespace ESport.Services.EFServices
 
         public Map GetMap(int id)
         {
-            throw new NotImplementedException();
+            var map = context.Maps.FirstOrDefault(m => m.MapsId == id);
+            return map;
         }
 
         public void EditMap(Map map)
         {
-            throw new NotImplementedException();
+            context.Maps.Update(map);
+            context.SaveChanges();
         }
     }
 }

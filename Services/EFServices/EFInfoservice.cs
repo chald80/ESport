@@ -33,7 +33,14 @@ namespace ESport.Services.EFServices
 
         public Info GetInfo(int id)
         {
-            throw new NotImplementedException();
+            var info = context.Infos.FirstOrDefault(i => i.InfoId == id);
+            return info;
+        }
+
+        public void EditInfo(Info info)
+        {
+            context.Infos.Update(info);
+            context.SaveChanges();
         }
     }
 }

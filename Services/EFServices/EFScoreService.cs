@@ -19,13 +19,13 @@ namespace ESport.Services.EFServices
             return context.Scores;
         }
 
-        public void AddGame(Score score)
+        public void AddScore(Score score)
         {
             context.Scores.Add(score);
             context.SaveChanges();
         }
 
-        public void DeleteGame(Score score)
+        public void DeleteScore(Score score)
         {
             context.Scores.Remove(score);
             context.SaveChanges();
@@ -33,7 +33,14 @@ namespace ESport.Services.EFServices
 
         public Score GetScore(int id)
         {
-            throw new NotImplementedException();
+            var score = context.Scores.FirstOrDefault(s => s.ScoreId == id);
+            return score;
+        }
+
+        public void EditScore(Score score)
+        {
+            context.Scores.Update(score);
+            context.SaveChanges();
         }
     }
 }

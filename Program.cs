@@ -30,7 +30,7 @@ namespace ESport
                 {
                     var context = services.GetRequiredService<ESportContext>();
                     context.Database.EnsureCreated();
-                    // DbInitializer.Initialize(context);
+                    //DbInitializer.Initialize(context);
                 }
                 catch (Exception ex)
                 {

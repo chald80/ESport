@@ -10,7 +10,7 @@ namespace ESport.Services.Interface
     {
         IEnumerable<Map> GetMaps();
         void AddMaps(Map map);
-        void DeleteGame(Map map);
+        void DeleteMap(Map map);
         Map GetMap(int id);
         public void EditMap(Map map);
 

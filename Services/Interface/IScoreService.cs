@@ -9,8 +9,10 @@ namespace ESport.Services.Interface
     public interface IScoreService
     {
         IEnumerable<Score> GetScores();
-        void AddGame(Score score);
-        void DeleteGame(Score score);
+        void AddScore(Score score);
+        void DeleteScore(Score score);
         Score GetScore(int id);
+        public void EditScore(Score score);
+
     }
 }

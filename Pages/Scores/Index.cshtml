@@ -1,0 +1,37 @@
+﻿@page
+@model ESport.Pages.Scores.IndexModel
+@{
+    ViewData["Title"] = "Profiles";
+}
+
+<h3 style="color:red"> List of Scores</h3>
+<p>
+    <a asp-page="/Scores/Create">Create New Score</a>
+</p>
+<table class="table">
+    <thead>
+    <tr>
+        <th> Score Id  </th>
+        <th> Score Name </th>
+    </tr>
+    </thead>
+    <tbody>
+
+    @if (Model != null)
+    {
+        @foreach (var item in Model.Scores)
+        {
+            <tr>
+                <td>  @item.ScoreId </td>
+                <td>  @item.Stat </td>
+
+                <td>
+                    <a asp-page="/Scores/Delete" asp-route-id="@item.ScoreId">Delete </a>
+                    <a asp-page="/Scores/Details" asp-route-id="@item.ScoreId">Details </a>
+                    <a asp-page="/Scores/Edit" asp-route-id="@item.ScoreId">Edit </a>
+                </td>
+
+            </tr>
+        }
+    }
+</table>
