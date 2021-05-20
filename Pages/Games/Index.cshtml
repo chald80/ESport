@@ -13,6 +13,8 @@
         <tr>
             <th> Game Id  </th>
             <th> Game Name </th>
+            <th> ProfileId </th>
+
         </tr>
     </thead>
     <tbody>
@@ -24,6 +26,8 @@
                 <tr>
                     <td>  @item.GameId </td>
                     <td>  @item.GameName </td>
+                    <td>  @item.ProfileId </td>
+
 
                     <td>
                         <a asp-page="/Games/Delete" asp-route-id="@item.GameId">Delete </a>

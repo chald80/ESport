@@ -16,6 +16,7 @@ namespace ESport.Pages.Games
         }
         [BindProperty]
         public Game Game { get; set; }
+
         IGameService gameService;
         public CreateModel(IGameService service)
         {

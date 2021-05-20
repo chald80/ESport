@@ -13,8 +13,8 @@ namespace ESport.Model
         [Key]
         [Required]
         public int ScoreId { get; set; }
-        [Required]
         public int Stat { get; set; }
+        public Map Map { get; set; }
         
 
     }

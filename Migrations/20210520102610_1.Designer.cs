@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ESport.Migrations
 {
     [DbContext(typeof(ESportContext))]
-    [Migration("20210519183520_3")]
-    partial class _3
+    [Migration("20210520102610_1")]
+    partial class _1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -29,13 +29,15 @@ namespace ESport.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("GameName")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("ProfileId")
                         .HasColumnType("int");
 
                     b.HasKey("GameId");
+
+                    b.HasIndex("ProfileId")
+                        .IsUnique();
 
                     b.ToTable("Games");
                 });
@@ -90,7 +92,6 @@ namespace ESport.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("ProfileName")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("ProfileId");
@@ -118,19 +119,13 @@ namespace ESport.Migrations
                     b.ToTable("Score");
                 });
 
-            modelBuilder.Entity("GameProfile", b =>
+            modelBuilder.Entity("ESport.Model.Game", b =>
                 {
-                    b.Property<int>("GamesGameId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ProfilesProfileId")
-                        .HasColumnType("int");
-
-                    b.HasKey("GamesGameId", "ProfilesProfileId");
-
-                    b.HasIndex("ProfilesProfileId");
-
-                    b.ToTable("GameProfile");
+                    b.HasOne("ESport.Model.Profile", null)
+                        .WithOne("Game")
+                        .HasForeignKey("ESport.Model.Game", "ProfileId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("ESport.Model.Info", b =>
@@ -144,31 +139,20 @@ namespace ESport.Migrations
 
             modelBuilder.Entity("ESport.Model.Map", b =>
                 {
-                    b.HasOne("ESport.Model.Game", null)
+                    b.HasOne("ESport.Model.Game", "Game")
                         .WithMany("Maps")
                         .HasForeignKey("GameId");
+
+                    b.Navigation("Game");
                 });
 
             modelBuilder.Entity("ESport.Model.Score", b =>
                 {
-                    b.HasOne("ESport.Model.Map", null)
+                    b.HasOne("ESport.Model.Map", "Map")
                         .WithMany("Scores")
                         .HasForeignKey("MapsId");
-                });
 
-            modelBuilder.Entity("GameProfile", b =>
-                {
-                    b.HasOne("ESport.Model.Game", null)
-                        .WithMany()
-                        .HasForeignKey("GamesGameId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("ESport.Model.Profile", null)
-                        .WithMany()
-                        .HasForeignKey("ProfilesProfileId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.Navigation("Map");
                 });
 
             modelBuilder.Entity("ESport.Model.Game", b =>
@@ -183,6 +167,8 @@ namespace ESport.Migrations
 
             modelBuilder.Entity("ESport.Model.Profile", b =>
                 {
+                    b.Navigation("Game");
+
                     b.Navigation("Info");
                 });
 #pragma warning restore 612, 618

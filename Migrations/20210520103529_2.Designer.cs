@@ -4,14 +4,16 @@ using ESport.Model;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace ESport.Migrations
 {
     [DbContext(typeof(ESportContext))]
-    partial class ESportContextModelSnapshot : ModelSnapshot
+    [Migration("20210520103529_2")]
+    partial class _2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -68,7 +70,7 @@ namespace ESport.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("GameId")
+                    b.Property<int?>("GameId")
                         .HasColumnType("int");
 
                     b.Property<string>("MapsName")
@@ -136,11 +138,11 @@ namespace ESport.Migrations
 
             modelBuilder.Entity("ESport.Model.Map", b =>
                 {
-                    b.HasOne("ESport.Model.Game", null)
+                    b.HasOne("ESport.Model.Game", "Game")
                         .WithMany("Maps")
-                        .HasForeignKey("GameId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("GameId");
+
+                    b.Navigation("Game");
                 });
 
             modelBuilder.Entity("ESport.Model.Score", b =>

@@ -17,10 +17,9 @@ namespace ESport.Pages.Profiles
         {
             this.gameService = service;
         }
-        public void OnGet(int pid, int gid)
+        public void OnGet(int id)
         {
-            Game.ProfileId = pid;
-            Game.GameId = gid;
+            Game.GameId = id;
 
         }
         [BindProperty]

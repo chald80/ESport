@@ -15,8 +15,9 @@ namespace ESport.Model
         [Key]
         [Required]
         public int MapsId { get; set; }
-        [Required]
+        
         public string MapsName { get; set; }
+        public int GameId { get; set; }
         public virtual ICollection<Score> Scores { get; set; }
     }
 }

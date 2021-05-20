@@ -2,31 +2,17 @@
 
 namespace ESport.Migrations
 {
-    public partial class _3 : Migration
+    public partial class _1 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.CreateTable(
-                name: "Games",
-                columns: table => new
-                {
-                    GameId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    GameName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ProfileId = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Games", x => x.GameId);
-                });
-
             migrationBuilder.CreateTable(
                 name: "Profile",
                 columns: table => new
                 {
                     ProfileId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    ProfileName = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    ProfileName = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -34,44 +20,20 @@ namespace ESport.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Maps",
+                name: "Games",
                 columns: table => new
                 {
-                    MapsId = table.Column<int>(type: "int", nullable: false)
+                    GameId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    MapsName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    GameId = table.Column<int>(type: "int", nullable: true)
+                    GameName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ProfileId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Maps", x => x.MapsId);
+                    table.PrimaryKey("PK_Games", x => x.GameId);
                     table.ForeignKey(
-                        name: "FK_Maps_Games_GameId",
-                        column: x => x.GameId,
-                        principalTable: "Games",
-                        principalColumn: "GameId",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "GameProfile",
-                columns: table => new
-                {
-                    GamesGameId = table.Column<int>(type: "int", nullable: false),
-                    ProfilesProfileId = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_GameProfile", x => new { x.GamesGameId, x.ProfilesProfileId });
-                    table.ForeignKey(
-                        name: "FK_GameProfile_Games_GamesGameId",
-                        column: x => x.GamesGameId,
-                        principalTable: "Games",
-                        principalColumn: "GameId",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_GameProfile_Profile_ProfilesProfileId",
-                        column: x => x.ProfilesProfileId,
+                        name: "FK_Games_Profile_ProfileId",
+                        column: x => x.ProfileId,
                         principalTable: "Profile",
                         principalColumn: "ProfileId",
                         onDelete: ReferentialAction.Cascade);
@@ -98,6 +60,26 @@ namespace ESport.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Maps",
+                columns: table => new
+                {
+                    MapsId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    MapsName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    GameId = table.Column<int>(type: "int", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Maps", x => x.MapsId);
+                    table.ForeignKey(
+                        name: "FK_Maps_Games_GameId",
+                        column: x => x.GameId,
+                        principalTable: "Games",
+                        principalColumn: "GameId",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Score",
                 columns: table => new
                 {
@@ -118,9 +100,10 @@ namespace ESport.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_GameProfile_ProfilesProfileId",
-                table: "GameProfile",
-                column: "ProfilesProfileId");
+                name: "IX_Games_ProfileId",
+                table: "Games",
+                column: "ProfileId",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_Info_ProfileId",
@@ -142,22 +125,19 @@ namespace ESport.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "GameProfile");
-
-            migrationBuilder.DropTable(
                 name: "Info");
 
             migrationBuilder.DropTable(
                 name: "Score");
 
             migrationBuilder.DropTable(
-                name: "Profile");
-
-            migrationBuilder.DropTable(
                 name: "Maps");
 
             migrationBuilder.DropTable(
                 name: "Games");
+
+            migrationBuilder.DropTable(
+                name: "Profile");
         }
     }
 }

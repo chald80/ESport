@@ -53,7 +53,7 @@ namespace ESport.Services.EFServices
         public Profile GetScore(int id)
         {
             var profile = context.Profiles
-                .Include(g => g.Games)
+                .Include(g => g.Game)
                 .ThenInclude(m => m.Maps)
                 .ThenInclude(s => s.Scores)
                 .FirstOrDefault(p => p.ProfileId == id);
