@@ -13,6 +13,8 @@
     <tr>
         <th> Score Id  </th>
         <th> Score Name </th>
+        <th> Map Id </th>
+
     </tr>
     </thead>
     <tbody>
@@ -24,6 +26,8 @@
             <tr>
                 <td>  @item.ScoreId </td>
                 <td>  @item.Stat </td>
+                <td>  @item.MapId </td>
+
 
                 <td>
                     <a asp-page="/Scores/Delete" asp-route-id="@item.ScoreId">Delete </a>

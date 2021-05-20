@@ -65,8 +65,8 @@ namespace ESport.Migrations
                 {
                     MapsId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    MapsName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    GameId = table.Column<int>(type: "int", nullable: true)
+                    MapsName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    GameId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -76,7 +76,7 @@ namespace ESport.Migrations
                         column: x => x.GameId,
                         principalTable: "Games",
                         principalColumn: "GameId",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -86,24 +86,23 @@ namespace ESport.Migrations
                     ScoreId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Stat = table.Column<int>(type: "int", nullable: false),
-                    MapsId = table.Column<int>(type: "int", nullable: true)
+                    MapId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Score", x => x.ScoreId);
                     table.ForeignKey(
-                        name: "FK_Score_Maps_MapsId",
-                        column: x => x.MapsId,
+                        name: "FK_Score_Maps_MapId",
+                        column: x => x.MapId,
                         principalTable: "Maps",
                         principalColumn: "MapsId",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Games_ProfileId",
                 table: "Games",
-                column: "ProfileId",
-                unique: true);
+                column: "ProfileId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Info_ProfileId",
@@ -117,9 +116,9 @@ namespace ESport.Migrations
                 column: "GameId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Score_MapsId",
+                name: "IX_Score_MapId",
                 table: "Score",
-                column: "MapsId");
+                column: "MapId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

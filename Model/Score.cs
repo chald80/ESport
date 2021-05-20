@@ -14,7 +14,7 @@ namespace ESport.Model
         [Required]
         public int ScoreId { get; set; }
         public int Stat { get; set; }
-        public Map Map { get; set; }
+        public int MapId { get; set; }
         
 
     }

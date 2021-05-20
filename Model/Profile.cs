@@ -15,6 +15,6 @@ namespace ESport.Model
         public int ProfileId { get; set; }
         public string ProfileName { get; set; }
         public  Info Info { get; set; }
-        public Game Game { get; set; }
+        public virtual ICollection<Game> Games { get; set; }
     }
 }
